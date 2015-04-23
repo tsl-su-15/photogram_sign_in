@@ -42,7 +42,7 @@ Let's get started.
 
 ## The Target
 
-To start with, we'll keep it simple and manage just one resource: photos. Our goal is to build an app that lets users submit URLs of photos and add captions for them.
+To start with, we'll keep it simple and manage just one resource: photos. Our goal is to build an app that lets users submit URLs of photos and add captions for them. Check [this][4] out as an example, but without the user avatars and comments.
 
 Eventually, we'll add the ability to sign up, upload photos, and follow other users, and we'll wind up building Instagram. But for now, anonymous visitors will simply copy-paste the URLs of images that are already on the Internet.
 
@@ -52,36 +52,71 @@ Eventually, we'll add the ability to sign up, upload photos, and follow other us
  1. Clone this repository.
  1. `cd` in to the application's root folder.
  1. `bundle install`
- 1. `rake db:migrate` (I have already written the instructions to create a table to store photos for you, but you still need to do this to execute the instructions)
- 1. `rake db:seed` (This command will pre-populate your table with a few rows, so that you can get straight to work. If you are interested, you can see how I did it in `/db/seeds.rb`.)
  1. `rails server`
  1. Open up the code in Sublime.
 
-### READ (index, show)
 
-Once you run through the setup, you will already have a table created called `photos` that has two columns in it: `source` (where we'll store the URL of each photo), and `caption`. I wrote the migration to create this table for you, and added the model file, so you don't need to worry about that step.
+### Generate a model
 
-I have also already added two routes:
+You'll first need to decide what needs to be stored inside the database. You're storing image source and caption information for photos, so you should create a model called `Photo` with columns called `source` and `caption`. `source` should have a data type of string and `caption` should have a data type of text. Run the following terminal command inside your app's folder:
 
-    get("/photos",     { :controller => "photos", :action => "index" })
+    rails generate model Photo source:string caption:text
+
+This command generates two important files: a model file in the /app/models folder and a migration file in the /db/migrate folder. The model file is the interface that the application code uses to talk to the database. The migration file makes a change to the database - in this case, it adds a new table called photos.
+
+Once you've created a new model, make sure you run the command:
+
+    rake db:migrate
+
+to actually execute the migration you've just created.
+
+### Add items to the database
+
+Inside your app's folder in terminal, open up rails console with
+
+    rails console
+
+This opens up an IRB-like interface where you can run Ruby code. It also an connect to your application code, so it's a great tool for testing small changes to your application.
+
+First check to make sure that the photos table was properly created:
+
+    Photo.all
+
+This should pull up what looks somewhat like an empty array. This object is called an `ActiveRecord` relation, and works like a super-charge array. Since there isn't anything between the `[ ]`, there are no photos in the database.
+
+We can add a photo with the following commands (assuming you followed the naming conventions specified above). Execute each command line-by-line.
+
+    p = Photo.new
+    p.source = "http://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/ Lake_Bondhus_Norway_2862.jpg/1280px-Lake_Bondhus_Norway_2862.jpg"
+    p.caption = "Lake Bondhus"
+    p.save
+
+Now if you run `Photo.all` again, you'll see one item in the ActiveRecord relation. Keep adding photos until you have 5-7 photos in your database. If you'd like a more detailed explanation of adding items to the database, check out this [Ruby CRUD Cheatsheet][1].
+
+
+### READ (show)
+
+You can pull up a specific databse item by it's ID number. For example, if you wanted to pull up an item from the photos table with an ID of 3, you could run the following command in console:
+
+    Photo.find(3)
+
+If you wanted to pull out information from that photo, you could just save the object into a variable and pull out columns using the dot-notation:
+
+    p = Photo.find(3)
+    p.source
+    p.caption
+
+This is not very user-friendly, though. User should be able to access items through the web interface, not console.
+
+**Your first job** is to display a photo details page for each individual photo. For example, a user should be able to go to "/photos/2" and see information about the photo with an ID of 2 or go to "/photos/3" and see information about the photo with an ID of 3.
+
+I have already added one route to start you off on this challenge:
+
     get("/photos/:id", { :controller => "photos", :action => "show" })
 
-(as well as a route for the bare domain, which also goes to the `index` action). The first one is to let users see a list of all photos if they visit
+as well as a controller file and a blank action.
 
-[http://localhost:3000/photos](http://localhost:3000/photos)
-
-Click this link -- you'll see that I have already completed the RCAV. Follow it through and make sure you understand what is going on at each step.
-
-Notice that there are already a few photos in the table -- I wrote some Ruby to pre-populate your table with a few rows, so that you can get straight to work, and you ran it when you did `rake db:seed`. If you like, you can go into your `rails console` and add a few more photos of your choosing, by using your [CRUD with Ruby][1] skills. The index page will grow as you do this.
-
-Under each photo on the index page, there is a link labeled "Show". The `href`s for these links look like:
-
- - http://localhost:3000/photos/1
- - http://localhost:3000/photos/2
- - http://localhost:3000/photos/3
- - http://localhost:3000/photos/4
-
-**Your first job** is to make these URLs work to display a photo details page for each individual photo. In particular, in the `show` action, use the number after the slash to retrieve the row from the `photo` table with the corresponding `id`, and use that row's `source` value to draw the `<img>` in the view. Toss in the `caption`, too.
+In the `show` action, use the number after the slash to retrieve the row from the `photo` table with the corresponding `id`, and use that row's `source` value to draw the `<img>` in the view. Toss in the `caption`, too.
 
 Hints: Remember your [Ruby CRUD Cheatsheet][1], and what you know about the `params` hash.
 
@@ -99,7 +134,7 @@ The first step is: let's give the user a form to type some stuff in to. Add the 
 
 This action has a very simple job: draw a blank form in the user's browser for them to type some stuff into.
 
-It's been a while since we've done any forms, but let's shake off the rust and recall our Essential HTML (refer to that repository if you need to) to craft a form for a photo with two inputs: one for the image's URL and one for a caption. Complete the RCAV and add the following HTML in the view:
+Craft a form for a photo with two inputs: one for the image's URL and one for a caption. Complete the RCAV and add the following HTML in the view:
 
     <h1>Add A New photo</h1>
 
@@ -141,7 +176,7 @@ We need a way to pick a different URL to send the data to when the user clicks t
 
 Fortunately, we can very easily pick which URL receives the data from a form: it is determined by adding an `action` attribute to the `<form>` tag, like so:
 
-    <form action="http://localhost:3000/create_photo">
+    <form action="/create_photo">
 
 Think of the action attribute as being like the `href` attribute of the `<a>` tag. It determines where the user is sent after they click. The only difference between a form and a link is that when the user clicks a form, some extra data comes along for the ride, but either way, the user is sent to a new URL.
 
@@ -163,9 +198,9 @@ Once done, display a confirmation message that the information was saved in the 
 
 ### DELETE (destroy)
 
-Under each photo on the index page, there is a link labeled "Delete". The markup for these links look like:
+On each photo's show page, create a link to delete the photo. It should look like this:
 
-    <a href="http://localhost:3000/delete_photo/<%= photo.id %>">Delete</a>
+    <a href="/delete_photo/<%= @photo.id %>">Delete</a>
 
 Does it make sense how that link is being put together?
 
@@ -179,9 +214,9 @@ Write a route, action, and view to make that happen. To start you off, here's a 
 
 #### edit_form
 
-Under each photo on the index page, there is a link labeled "Edit". The markup for these links look like:
+In the photo show page, create a link labeled "Edit". The markup for this link looks like:
 
-    <a href="http://localhost:3000/photos/<%= photo.id %>/edit">Edit</a>
+    <a href="/photos/<%= photo.id %>/edit">Edit</a>
 
 Add a route to support this action:
 
@@ -197,7 +232,7 @@ Hint: You can pre-fill an `<input>` with the `value=""` attribute; e.g.,
 
 The `action` attributes of your edit forms should look like this:
 
-    <form action="http://localhost:3000/update_photo/4">
+    <form action="/update_photo/4">
 
 so that when the user clicks submit, we can finally do the work of updating our database...
 
@@ -208,6 +243,16 @@ Add another route:
     get("/update_photo/:id", { :controller => "photos", :action => "update_row" })
 
 The job of this action is to receive data from an edit form, retrieve the corresponding row from the table, and update it with the revised information. Give it a shot. Afterwards, display a confirmation message in the view.
+
+### READ (index)
+
+#### index
+
+The last action we need to complete is a page that displays every photo in the database. Add this route to get started
+
+    get("/photos", { :controller => "photos", :action => "index" })
+
+The index action should pull up all the photos with `Photo.all` and send them down to the view. The view should loop through each item in the ActiveRecord relation and display the item's image and caption. Use [the original mockup][4] as an example.
 
 ## Conclusion
 
