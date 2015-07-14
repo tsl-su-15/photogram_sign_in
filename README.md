@@ -87,7 +87,7 @@ This should pull up what looks somewhat like an empty array. This object is call
 We can add a photo with the following commands (assuming you followed the naming conventions specified above). Execute each command line-by-line.
 
     p = Photo.new
-    p.source = "http://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/ Lake_Bondhus_Norway_2862.jpg/1280px-Lake_Bondhus_Norway_2862.jpg"
+    p.source = "http://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Lake_Bondhus_Norway_2862.jpg/1280px-Lake_Bondhus_Norway_2862.jpg"
     p.caption = "Lake Bondhus"
     p.save
 
