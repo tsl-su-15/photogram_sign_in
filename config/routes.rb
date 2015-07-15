@@ -6,4 +6,7 @@ Rails.application.routes.draw do
 
   # Routes to READ photos
   get("/photos/:id",       { :controller => "photos", :action => "show" })
+
+  # Route to DESTROY photos
+  get("/delete_photo/:id", { :controller => "photos", :action => "destroy" })
 end
