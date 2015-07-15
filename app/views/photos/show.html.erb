@@ -10,10 +10,11 @@
         <a class="btn btn-success" href="//htmlpreview.github.io/?https://github.com/boothappdev/bootstrap_exercises/blob/master/photogram/solution.html#">
           <i class="fa fa-heart-o"></i>
         </a>
-        <a class="btn btn-warning" href="//htmlpreview.github.io/?https://github.com/boothappdev/bootstrap_exercises/blob/master/photogram/solution.html#">
+
+        <!-- Make this edit link work -->
+        <a class="btn btn-warning" href="/photos/<%= @photo.id %>/edit">
           <i class="fa fa-edit"></i>
         </a>
-        <!-- Make this destroy link work -->
         <a class="btn btn-danger" href="/delete_photo/<%= @photo.id %>">
           <i class="fa fa-trash-o"></i>
         </a>
