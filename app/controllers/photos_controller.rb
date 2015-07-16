@@ -32,6 +32,10 @@ class PhotosController < ApplicationController
 
     redirect_to "/photos/#{@photo.id}"
   end
+
+  def index
+    @photos = Photo.all
+  end
 end
 
 
