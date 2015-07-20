@@ -1,4 +1,11 @@
 <h1>Editing photo #<%= @photo.id %></h1>
+<% if @photo.errors %>
+  <ul>
+    <% @photo.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
 <form action="/update_photo/<%= @photo.id %>">
   <div class="form-group">
     <label for="photo_caption">Caption:</label>
