@@ -5,6 +5,9 @@
       <div class="caption">
         <p class="lead"><%= photo.caption %></p>
         <p>
+          <%= link_to photo_path(photo.id), :class => "btn btn-primary" do %>
+            <i class="fa fa-search-plus"></i>
+          <% end %>
           <a class="btn btn-primary" href="/photos/1">
             <i class="fa fa-search-plus"></i>
           </a>

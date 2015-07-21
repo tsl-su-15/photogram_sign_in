@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get("/create_photo", { :controller => "photos", :action => "create_row" })
 
   # Routes to READ photos
-  get("/photos/:id",       { :controller => "photos", :action => "show" })
+  get("/photos/:id",       { :controller => "photos", :action => "show", as: 'photo' })
   get('/photos', { :controller => 'photos', :action => "index"})
 
   # Routes to UPDATE photos
