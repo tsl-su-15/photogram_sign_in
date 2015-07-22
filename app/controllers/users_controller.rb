@@ -17,6 +17,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new
     @user.email = params[:email]
+    @user.image_url = params[:image_url]
 
     if @user.save
       redirect_to users_url, :notice => "User created successfully."
@@ -33,6 +34,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     @user.email = params[:email]
+    @user.image_url = params[:image_url]
 
     if @user.save
       redirect_to user_url(@user.id), :notice => "User updated successfully."
