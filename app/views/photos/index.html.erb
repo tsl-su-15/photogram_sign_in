@@ -2,16 +2,16 @@
   <% user = User.find(photo.user_id) %>
   <div class="row">
     <div class="col-md-3 col-md-offset-1">
-            <div class="media">
-              <a href="<%= user_path(user.id) %>">
-                <img width="150" alt="Avatar image" class="media-object" src="<%= user.image_url %>">
-              </a>
-              <div class="media-body">
-                <h4 class="media-heading"><%= user.email %></h4>
-                Created <%= time_ago_in_words(photo.created_at) %> ago
-              </div>
-            </div>
+        <div class="media">
+          <a href="<%= user_path(user.id) %>">
+            <img width="150" alt="Avatar image" class="media-object" src="<%= user.image_url %>">
+          </a>
+          <div class="media-body">
+            <h4 class="media-heading"><%= user.email %></h4>
+            Created <%= time_ago_in_words(photo.created_at) %> ago
           </div>
+        </div>
+      </div>
     <div class="well col-md-6">
       <div class="thumbnail">
         <img alt="<%= photo.caption %>" class="img-responsive" src="<%= photo.source %>">
