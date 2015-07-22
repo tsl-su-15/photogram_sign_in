@@ -8,20 +8,17 @@
           <%= link_to photo_path(photo.id), :class => "btn btn-primary" do %>
             <i class="fa fa-search-plus"></i>
           <% end %>
-          <a class="btn btn-primary" href="/photos/1">
-            <i class="fa fa-search-plus"></i>
-          </a>
           <a class="btn btn-success" href="//htmlpreview.github.io/?https://github.com/boothappdev/bootstrap_exercises/blob/master/photogram/solution.html#">
             <i class="fa fa-heart-o"></i>
           </a>
 
-          <!-- Make this edit link work -->
-          <a class="btn btn-warning" href="/photos/<%= photo.id %>/edit">
+          <%= link_to edit_photo_path(photo.id), :class => "btn btn-warning" do %>
             <i class="fa fa-edit"></i>
-          </a>
-          <a class="btn btn-danger" href="/delete_photo/<%= photo.id %>">
+          <% end %>
+
+          <%= link_to photo_path(photo.id), :class => "btn btn-danger", method: :delete, data: {confirm: "Are you sure?"} do %>
             <i class="fa fa-trash-o"></i>
-          </a>
+          <% end %>
         </p>
       </div>
     </div>

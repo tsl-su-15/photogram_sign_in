@@ -3,17 +3,17 @@ class PhotosController < ApplicationController
     @photo = Photo.find(params['id'])
   end
 
-  def new_form
+  def new
     @photo = Photo.new
   end
 
-  def create_row
+  def create
     @photo = Photo.new
     @photo.caption = params['the_caption']
     @photo.source = params['the_source']
 
     if @photo.save
-      redirect_to "/photos/#{@photo.id}"
+      redirect_to photo_url(@photo.id)
     else
       render 'new_form'
     end
@@ -23,19 +23,21 @@ class PhotosController < ApplicationController
   def destroy
     @photo = Photo.find(params['id'])
     @photo.destroy
+
+    redirect_to photos_url
   end
 
-  def edit_form
+  def edit
     @photo = Photo.find(params['id'])
   end
 
-  def update_row
+  def update
     @photo = Photo.find(params['id'])
     @photo.caption = params['the_caption']
     @photo.source = params['the_source']
 
     if @photo.save
-      redirect_to "/photos/#{@photo.id}"
+      redirect_to photo_url(@photo.id)
     else
       render 'edit_form'
     end
