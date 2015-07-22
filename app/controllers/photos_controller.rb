@@ -15,7 +15,7 @@ class PhotosController < ApplicationController
     if @photo.save
       redirect_to photo_url(@photo.id)
     else
-      render 'new_form'
+      render 'new'
     end
 
   end
@@ -39,7 +39,7 @@ class PhotosController < ApplicationController
     if @photo.save
       redirect_to photo_url(@photo.id)
     else
-      render 'edit_form'
+      render 'edit'
     end
 
   end
