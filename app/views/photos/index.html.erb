@@ -1,25 +1,39 @@
 <% @photos.each do |photo| %>
-  <div class="well">
-    <div class="thumbnail">
-      <img alt="<%= photo.caption %>" class="img-responsive" src="<%= photo.source %>">
-      <div class="caption">
-        <p class="lead"><%= photo.caption %></p>
-        <p>
-          <%= link_to photo_path(photo.id), :class => "btn btn-primary" do %>
-            <i class="fa fa-search-plus"></i>
-          <% end %>
-          <a class="btn btn-success" href="//htmlpreview.github.io/?https://github.com/boothappdev/bootstrap_exercises/blob/master/photogram/solution.html#">
-            <i class="fa fa-heart-o"></i>
-          </a>
+  <% user = User.find(photo.user_id) %>
+  <div class="row">
+    <div class="col-md-3 col-md-offset-1">
+            <div class="media">
+              <a href="<%= user_path(user.id) %>">
+                <img width="150" alt="Avatar image" class="media-object" src="<%= user.image_url %>">
+              </a>
+              <div class="media-body">
+                <h4 class="media-heading"><%= user.email %></h4>
+                Created <%= time_ago_in_words(photo.created_at) %> ago
+              </div>
+            </div>
+          </div>
+    <div class="well col-md-6">
+      <div class="thumbnail">
+        <img alt="<%= photo.caption %>" class="img-responsive" src="<%= photo.source %>">
+        <div class="caption">
+          <p class="lead"><%= photo.caption %></p>
+          <p>
+            <%= link_to photo_path(photo.id), :class => "btn btn-primary" do %>
+              <i class="fa fa-search-plus"></i>
+            <% end %>
+            <a class="btn btn-success" href="//htmlpreview.github.io/?https://github.com/boothappdev/bootstrap_exercises/blob/master/photogram/solution.html#">
+              <i class="fa fa-heart-o"></i>
+            </a>
 
-          <%= link_to edit_photo_path(photo.id), :class => "btn btn-warning" do %>
-            <i class="fa fa-edit"></i>
-          <% end %>
+            <%= link_to edit_photo_path(photo.id), :class => "btn btn-warning" do %>
+              <i class="fa fa-edit"></i>
+            <% end %>
 
-          <%= link_to photo_path(photo.id), :class => "btn btn-danger", method: :delete, data: {confirm: "Are you sure?"} do %>
-            <i class="fa fa-trash-o"></i>
-          <% end %>
-        </p>
+            <%= link_to photo_path(photo.id), :class => "btn btn-danger", method: :delete, data: {confirm: "Are you sure?"} do %>
+              <i class="fa fa-trash-o"></i>
+            <% end %>
+          </p>
+        </div>
       </div>
     </div>
   </div>
