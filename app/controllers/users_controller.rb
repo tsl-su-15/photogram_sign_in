@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+  # add a picture to the users table
+
   def index
     @users = User.all
   end

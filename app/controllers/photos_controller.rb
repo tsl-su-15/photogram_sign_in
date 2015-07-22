@@ -36,6 +36,7 @@ class PhotosController < ApplicationController
     @photo = Photo.find(params['id'])
     @photo.caption = params['the_caption']
     @photo.source = params['the_source']
+    @photo.user_id = params['the_user_id']
 
     if @photo.save
       redirect_to photo_url(@photo.id)
