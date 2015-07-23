@@ -1,11 +1,26 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
 
+User.destroy_all
+user_info = [
+  {
+    email: "brianna.woods19@example.com",
+    image_url: "https://randomuser.me/api/portraits/med/women/69.jpg"
+  },
+  {
+    email: "randy.baker89@example.com",
+    image_url: "https://randomuser.me/api/portraits/med/men/28.jpg"
+  },
+  {
+    email: "isaac.gonzalez65@example.com",
+    image_url: "https://randomuser.me/api/portraits/med/men/10.jpg"
+  }
+]
+
+user_info.each do |user|
+  User.create!(user)
+end
+puts "There are now #{User.count} users in the database."
+
+Photo.destroy_all
 photo_info = [
   {
     :source => "http://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Lake_Bondhus_Norway_2862.jpg/1280px-Lake_Bondhus_Norway_2862.jpg",
@@ -41,7 +56,8 @@ photo_info.each do |photo_hash|
   p = Photo.new
   p.source = photo_hash[:source]
   p.caption = photo_hash[:caption]
+  rand_num = rand(User.count)
+  p.user_id = User.offset(rand_num).first.id
   p.save
 end
-
 puts "There are now #{Photo.count} photos in the database."
