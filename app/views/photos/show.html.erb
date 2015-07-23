@@ -2,7 +2,7 @@
   <div class="thumbnail">
     <img alt="<%= @photo.caption %>" class="img-responsive" src="<%= @photo.source %>">
     <div class="caption">
-      <p class="lead"><%= @photo.caption %> <small>created by <%= link_to @user.email, user_path(@user.id) %></small></p>
+      <p class="lead"><%= @photo.caption %> <small>created by <%= link_to @photo.user.email, user_path(@photo.user.id) %></small></p>
       <p>
         <%= link_to photo_path(@photo.id), :class => "btn btn-primary" do %>
             <i class="fa fa-search-plus"></i>
