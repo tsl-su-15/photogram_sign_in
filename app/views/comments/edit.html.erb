@@ -25,7 +25,8 @@
               User
             </label>
             <div class="col-sm-10">
-              <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @comment.user_id %>">
+              <%= select_tag :user_id, options_from_collection_for_select(User.all, :id, :email, @comment.user_id), :class => 'form-control' %>
+              <!-- <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%#= @comment.user_id %>"> -->
             </div>
           </div>
 
@@ -35,7 +36,8 @@
               Photo
             </label>
             <div class="col-sm-10">
-              <input type="text" id="photo_id" name="photo_id" placeholder="Photo" class="form-control" value="<%= @comment.photo_id %>">
+              <%= select_tag :photo_id, options_from_collection_for_select(Photo.all, :id, :caption, @comment.photo_id), :class => 'form-control' %>
+              <!-- <input type="text" id="photo_id" name="photo_id" placeholder="Photo" class="form-control" value="<%#= @comment.photo_id %>"> -->
             </div>
           </div>
 
