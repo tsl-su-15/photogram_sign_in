@@ -48,6 +48,26 @@
           </p>
         </div>
       </div>
+      <ul class="media-list">
+        <% photo.comments.each do |comment| %>
+          <li class="media">
+            <a class="pull-left" href="<%= user_path(comment.user.id) %>">
+              <img alt="Avatar image" width="75" class="media-object" src="<%= comment.user.image_url %>">
+            </a>
+            <div class="media-body">
+              <p class="lead"><%= comment.contents %></p>
+            </div>
+          </li>
+        <% end %>
+
+        <li class="media">
+          <div class="media-body">
+            <form action="#">
+              <input class="form-control" name="comment[content]" placeholder="Add a comment..." type="text">
+            </form>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 <% end %>
