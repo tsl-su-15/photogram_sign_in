@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
     @comment.contents = params[:contents]
 
     if @comment.save
-      redirect_to comments_url, :notice => "Comment created successfully."
+      redirect_to :back, :notice => "Comment created successfully."
     else
       render 'new'
     end
