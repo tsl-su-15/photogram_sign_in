@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  # setting your root / home page
+  # get '/', :controller => 'photos', :action => 'index'
+  root 'photos#index'
+
   # Routes for the User resource:
   # CREATE
   get '/users/new',      :controller => 'users', :action => 'new',    :as => 'new_user'
