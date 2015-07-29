@@ -17,3 +17,7 @@
 body {
   padding-top: 60px;
 }
+
+.fav-form {
+  display: inline-block;
+}
