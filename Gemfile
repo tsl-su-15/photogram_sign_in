@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'starter_generators', :git => "git://github.com/rbetina/starter_generators", :branch => "panels"
 gem 'devise'
+gem 'faker'
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 

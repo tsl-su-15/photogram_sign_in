@@ -3,15 +3,21 @@ User.destroy_all
 user_info = [
   {
     email: "brianna.woods19@example.com",
-    image_url: "https://randomuser.me/api/portraits/med/women/69.jpg"
+    image_url: "https://randomuser.me/api/portraits/med/women/69.jpg",
+    password: "12341234",
+    password_confirmation: "12341234"
   },
   {
     email: "randy.baker89@example.com",
-    image_url: "https://randomuser.me/api/portraits/med/men/28.jpg"
+    image_url: "https://randomuser.me/api/portraits/med/men/28.jpg",
+    password: "12341234",
+    password_confirmation: "12341234"
   },
   {
     email: "isaac.gonzalez65@example.com",
-    image_url: "https://randomuser.me/api/portraits/med/men/10.jpg"
+    image_url: "https://randomuser.me/api/portraits/med/men/10.jpg",
+    password: "12341234",
+    password_confirmation: "12341234"
   }
 ]
 
@@ -61,3 +67,16 @@ photo_info.each do |photo_hash|
   p.save
 end
 puts "There are now #{Photo.count} photos in the database."
+
+Comment.destroy_all
+Photo.all.each do |photo|
+  rand(4).times do
+    c = Comment.new
+    rand_num = rand(User.count)
+    c.user_id = User.offset(rand_num).first.id
+    c.photo_id = photo.id
+    c.contents = Faker::Company.bs
+    c.save
+  end
+end
+puts "There are now #{Comment.count} comments in the database."
