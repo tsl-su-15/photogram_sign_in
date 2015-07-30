@@ -1,4 +1,13 @@
 class PhotosController < ApplicationController
+  before_action :check_if_owner, only: [:destroy, :edit, :update]
+
+  def check_if_owner
+    @photo = Photo.find(params['id'])
+    if current_user.id != @photo.user_id
+      redirect_to root_url, notice: "Nope! That's not yours"
+    end
+  end
+
   def show
     @photo = Photo.find(params['id'])
   end
