@@ -1,4 +1,14 @@
 class FavoritesController < ApplicationController
+  before_action :owner_check, only: [:edit, :update, :destroy]
+
+
+  def owner_check
+    @favorite = Favorite.find(params['id'])
+    if current_user.id != @favorite.user_id
+      redirect_to root_url, notice: "That's not yours!"
+    end
+  end
+
   def index
     @favorites = Favorite.all
   end
