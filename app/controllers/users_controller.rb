@@ -1,6 +1,14 @@
 class UsersController < ApplicationController
+  before_action :check_if_user, only: [:edit, :update, :destroy]
 
-  # add a picture to the users table
+
+  def check_if_user
+    @user = User.find(params[:id])
+    if current_user.id != @user.id
+      redirect_to root_url, notice: "You can't do that"
+    end
+  end
+
 
   def index
     @users = User.all

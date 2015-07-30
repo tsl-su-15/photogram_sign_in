@@ -1,4 +1,13 @@
 class CommentsController < ApplicationController
+  before_action :check_if_owner, only: [:edit, :update, :destroy]
+
+  def check_if_owner
+    @comment = Comment.find(params['id'])
+    if current_user.id != @comment.user_id
+      redirect_to root_url, notice: "You can't do that"
+    end
+  end
+
   def index
     @comments = Comment.all
   end

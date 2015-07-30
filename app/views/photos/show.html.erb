@@ -3,24 +3,33 @@
     <img alt="<%= @photo.caption %>" class="img-responsive" src="<%= @photo.source %>">
     <div class="caption">
       <p class="lead"><%= @photo.caption %> <small>created by <%= link_to @photo.user.email, user_path(@photo.user.id) %></small></p>
-      <p>
-        <%= link_to photo_path(@photo.id), :class => "btn btn-primary" do %>
-            <i class="fa fa-search-plus"></i>
+      <%= link_to photo_path(@photo.id), :class => "btn btn-primary" do %>
+          <i class="fa fa-search-plus"></i>
+      <% end %>
+      <% fav = @photo.favorite(current_user) %>
+      <% if fav %>
+        <%= link_to favorite_path(fav.id), method: :delete, class: "btn btn-success" do %>
+          <i class="fa fa-heart"> unfavorite</i>
         <% end %>
-        <a class="btn btn-success" href="//htmlpreview.github.io/?https://github.com/boothappdev/bootstrap_exercises/blob/master/photogram/solution.html#">
-          <i class="fa fa-heart-o"></i>
-        </a>
+      <% else %>
+        <%= form_tag( favorites_url, {:class => "fav-form"}) do %>
+          <input type="hidden" name="photo_id" value="<%= @photo.id %>">
+          <input type="hidden" name="user_id" value="<%= current_user.id %>">
+          <button class="btn btn-success">
+            <i class="fa fa-heart-o"></i>
+          </button>
+        <% end -%>
+      <% end %>
 
-        <% if current_user.id == @photo.user_id %>
-          <%= link_to edit_photo_path(@photo.id), :class => "btn btn-warning" do %>
-            <i class="fa fa-edit"></i>
-          <% end %>
-
-          <%= link_to photo_path(@photo.id), :class => "btn btn-danger", method: :delete, data: {confirm: "Are you sure?"} do %>
-            <i class="fa fa-trash-o"></i>
-          <% end %>
+      <% if current_user.id == @photo.user_id %>
+        <%= link_to edit_photo_path(@photo.id), :class => "btn btn-warning" do %>
+          <i class="fa fa-edit"></i>
         <% end %>
-      </p>
+
+        <%= link_to photo_path(@photo.id), :class => "btn btn-danger", method: :delete, data: {confirm: "Are you sure?"} do %>
+          <i class="fa fa-trash-o"></i>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>
