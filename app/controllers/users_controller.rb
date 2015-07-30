@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-  before_action :check_if_user, only: [:edit, :update, :destroy]
+  before_action :check_if_user_or_admin, only: [:edit, :update, :destroy]
 
 
-  def check_if_user
+  def check_if_user_or_admin
     @user = User.find(params[:id])
-    if current_user.id != @user.id
+    if current_user.id != @user.id && current_user.admin == false
       redirect_to root_url, notice: "You can't do that"
     end
   end
