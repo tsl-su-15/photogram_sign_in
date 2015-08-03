@@ -1,28 +1,2 @@
 <h1>Add A New photo</h1>
-<% if @photo.errors %>
-  <ul>
-    <% @photo.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-  </ul>
-<% end %>
-<%= form_tag(photos_path) do %>
-  <div class="form-group">
-    <label for="photo_caption">Caption:</label>
-    <input id="photo_caption" class="form-control" type="text" name="the_caption" value="<%= @photo.caption %>">
-  </div>
-  <div class="form-group">
-    <label for="photo_image_url">Image URL:</label>
-    <input id="photo_image_url" class="form-control" type="text" name="the_source" value="<%= @photo.source %>">
-  </div>
-  <div class="form-group">
-    <label for="photo_user_id">User ID:</label>
-    <!-- <input id="photo_user_id" class="form-control" type="text" name="the_user_id" value="<%#= @photo.user_id %>"> -->
-    <%= select_tag "the_user_id", options_from_collection_for_select(User.all, "id", "email", @photo.user_id), :class => 'form-control' %>
-
-  </div>
-  <div class="form-group">
-    <input class="btn btn-default" type="submit" value="Create photo">
-  </div>
-<% end %>
-
+<%= render 'form' %>
