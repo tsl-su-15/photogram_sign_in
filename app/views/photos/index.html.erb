@@ -40,7 +40,7 @@
               <i class="fa fa-heart"> unfavorite</i>
             <% end %>
           <% else %>
-            <%= form_tag( favorites_url, {:class => "fav-form"}) do %>
+            <%= form_tag( favorites_url, :class => "fav-form") do %>
               <input type="hidden" name="photo_id" value="<%= photo.id %>">
               <input type="hidden" name="user_id" value="<%= current_user.id %>">
               <button class="btn btn-success">
@@ -59,9 +59,9 @@
           <% end %>
         </div>
       </div>
-      <ul class="media-list">
+      <ul id="photo_<%= photo.id %>_comments"class="media-list">
         <% photo.comments.each do |comment| %>
-          <li class="media">
+          <li id="comment_<%= comment.id %>" class="media">
             <a class="pull-left" href="<%= user_path(comment.user.id) %>">
               <img alt="Avatar image" width="75" class="media-object" src="<%= comment.user.image_url %>">
             </a>
@@ -70,7 +70,8 @@
             </div>
           </li>
         <% end %>
-
+      </ul>
+      <ul id="photo_<%= photo.id %>_comment_form" class="media-list">
         <li class="media">
           <div class="media-body">
             <!-- Validation failure messages -->
@@ -85,7 +86,7 @@
             <% end %>
 
             <!-- Responsive panel example -->
-            <%= form_tag comments_url, :method => "post", :class => "form-horizontal" do %>
+            <%= form_tag comments_url, :method => "post", remote: true, :class => "form-horizontal" do %>
               <!-- Label and input for user_id -->
               <!-- Label and input for photo_id -->
               <!-- <div class="form-group"> -->

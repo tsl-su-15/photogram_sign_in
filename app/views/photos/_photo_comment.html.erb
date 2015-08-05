@@ -1,0 +1,8 @@
+<li id="comment_<%= comment.id %>" class="media">
+  <a class="pull-left" href="<%= user_path(comment.user.id) %>">
+    <img alt="Avatar image" width="75" class="media-object" src="<%= comment.user.image_url %>">
+  </a>
+  <div class="media-body">
+    <p class="lead"><%= comment.contents %></p>
+  </div>
+</li>

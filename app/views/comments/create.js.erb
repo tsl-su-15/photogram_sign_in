@@ -1,0 +1,5 @@
+$('#photo_<%= @comment.photo.id %>_comments').append('<%= j(render 'photos/photo_comment', comment: @comment) %>');
+
+$('#photo_<%= @comment.photo.id %>_comment_form input#contents').val("");
+
+$('#comment_<%= @comment.id %>').hide().fadeIn(500);

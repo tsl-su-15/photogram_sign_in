@@ -26,10 +26,13 @@ class CommentsController < ApplicationController
     @comment.photo_id = params[:photo_id]
     @comment.contents = params[:contents]
 
-    if @comment.save
-      redirect_to :back, :notice => "Comment created successfully."
-    else
-      render 'new'
+    respond_to do |format|
+      if @comment.save
+        format.html {redirect_to :back, :notice => "Comment created successfully."}
+        format.js { render 'create' }
+      else
+        format.html {render 'new'}
+      end
     end
   end
 

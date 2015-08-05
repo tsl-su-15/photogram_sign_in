@@ -4,4 +4,5 @@ class Comment < ActiveRecord::Base
   # def user
   #   return User.find(user_id)
   # end
+  belongs_to :photo
 end
