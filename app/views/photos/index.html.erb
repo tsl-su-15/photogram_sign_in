@@ -67,6 +67,11 @@
             </a>
             <div class="media-body">
               <p class="lead"><%= comment.contents %></p>
+              <p>
+                <%= link_to comment_path(comment.id), :class => "btn btn-danger", method: :delete, remote: true, data: {confirm: "Are you sure?"} do %>
+                  <i class="fa fa-trash-o"></i>
+                <% end %>
+              </p>
             </div>
           </li>
         <% end %>

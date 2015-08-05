@@ -59,6 +59,9 @@ class CommentsController < ApplicationController
 
     @comment.destroy
 
-    redirect_to comments_url, :notice => "Comment deleted."
+    respond_to do |format|
+      format.html { redirect_to comments_url, :notice => "Comment deleted." }
+      format.js { render 'destroy' }
+    end
   end
 end
