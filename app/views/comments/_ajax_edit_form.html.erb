@@ -1,0 +1,11 @@
+<%= form_tag comment_url(@comment.id), :method => "patch", remote: true, :class => "form-horizontal" do %>
+  <input type="hidden" name="photo_id" value="<%= @comment.photo.id %>">
+  <div class="form-group">
+    <label for="contents" class="control-label sr-only">
+      Contents
+    </label>
+    <div class="col-sm-12">
+      <input type="text" id="contents" name="contents" placeholder="Add a comment..." class="form-control" value="<%= @comment.contents %>">
+    </div>
+  </div>
+<% end %>

@@ -38,6 +38,11 @@ class CommentsController < ApplicationController
 
   def edit
     @comment = Comment.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def update
@@ -47,10 +52,14 @@ class CommentsController < ApplicationController
     @comment.photo_id = params[:photo_id]
     @comment.contents = params[:contents]
 
-    if @comment.save
-      redirect_to comment_url(@comment.id), :notice => "Comment updated successfully."
-    else
-      render 'edit'
+    respond_to do |format|
+      if @comment.save
+        format.html {redirect_to comment_url(@comment.id), :notice => "Comment updated successfully."}
+        format.js
+      else
+        format.html {render 'edit'}
+        format.js { render 'update_errors'}
+      end
     end
   end
 
